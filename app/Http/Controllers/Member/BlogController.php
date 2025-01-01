@@ -16,7 +16,7 @@ class BlogController extends Controller
     {
         $user = Auth::user();
         return view('member.blogs.index',[
-        'Post'=> Post::latest()->get()
+        'Post'=> Post::latest()->paginate(2)
     ]);
         // $data = Post::where('user_id',$user->id)->orderBy('id','desc')->get();
             

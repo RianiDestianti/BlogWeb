@@ -24,7 +24,7 @@
                         <tbody>
                             @foreach ($Post as $item)
                             <tr>
-                                <td class="border px-6 py-4 text-center">{{ $loop->iteration }}</td>
+                                <td class="border px-6 py-4 text-center">{{ $Post->firstItem() + $loop->index }}</td>
                                 <td class="border px-6 py-4">
                                     {{ $item->title }}
                                     <div class="block lg:hidden text-sm text-gray-500">
@@ -45,6 +45,9 @@
                            
                         </tbody>
                     </table>
+                </div>
+                <div class="p-5">
+                    {{ $Post->links() }}
                 </div>
             </div>
         </div>
