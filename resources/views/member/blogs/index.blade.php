@@ -22,16 +22,16 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($data as $item)
+                            @foreach ($Post as $item)
                             <tr>
                                 <td class="border px-6 py-4 text-center">{{ $loop->iteration }}</td>
                                 <td class="border px-6 py-4">
                                     {{ $item->title }}
                                     <div class="block lg:hidden text-sm text-gray-500">
-                                        {{ $item->status }} | {{ $item->created_at }}
+                                        {{ $item->status }} | {{ $item->created_at->isoFormat('dddd, D MMMM Y') }}
                                     </div>
                                 </td>
-                                <td class="border px-6 py-4 text-center text-gray-500 text-sm hidden lg:table-cell">{{ $item->created_at }}</td>
+                                <td class="border px-6 py-4 text-center text-gray-500 text-sm hidden lg:table-cell">{{ $item->created_at->isoFormat('dddd, D MMMM Y')  }}</td>
                                 <td class="border px-6 py-4 text-center text-sm hidden lg:table-cell"> {{ $item->status }}</td>
                                 <td class="border px-6 py-4 text-center">
                                     <a href='' class="text-blue-600 hover:text-blue-400 px-2">edit</a>
@@ -42,9 +42,7 @@
                                 </td>
                             </tr>
                             @endforeach
-                            @if($data->isEmpty())
-                               <p>No posts found for this user.</p>
-                            @endif
+                           
                         </tbody>
                     </table>
                 </div>
