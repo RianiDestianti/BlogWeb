@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Http\Controllers\Member;
-
 use App\Http\Controllers\Controller;
 use App\Models\Post;
 use Illuminate\Http\Request;
@@ -72,6 +71,15 @@ class BlogController extends Controller
             'thumbnail.max'=>'Ukuran Maksimum Untuk Thumbnail Adalah 10MB',
 
         ]);
+
+        $data=[
+            'title'=>$request->title,
+            'description'=>$request->description,
+            'content'=>$request->content,
+            'status'=>$request->status,
+        ];
+        Post::where('id',$post->id)->update($data);
+        return redirect()->route('member.blogs.index')->with('success','Data Berhasil Di-Update');
     }
 
     /**

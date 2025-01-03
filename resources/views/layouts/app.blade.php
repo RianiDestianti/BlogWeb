@@ -34,6 +34,16 @@
                             </ul>
                         </div>
                         @endif
+
+                        @session('success')
+                        <div class="max-w-7x1 mx-auto bg-blue-400 p-3 mt-3 rounded-md">
+                            <ul>
+                               {{ session('success') }}
+                            </ul>
+                        </div>
+                        @endsession
+                        
+                        
                     </div>
                 </header>
             @endisset
