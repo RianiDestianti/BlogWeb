@@ -16,7 +16,7 @@ class BlogController extends Controller
     {
         $user = Auth::user();
         return view('member.blogs.index',[
-        'Post'=> Post::latest()->paginate(2)
+        'Post'=> Post::latest()->paginate(3)
     ]);
         // $data = Post::where('user_id',$user->id)->orderBy('id','desc')->get();
             
@@ -51,7 +51,8 @@ class BlogController extends Controller
      */
     public function edit(Post $post)
     {
-        //
+        $data = $post;
+        return view('member.blogs.edit', compact('data'));
     }
 
     /**
