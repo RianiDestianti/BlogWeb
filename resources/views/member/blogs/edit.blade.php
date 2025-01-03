@@ -19,7 +19,7 @@
                             </p>
                         </header>
 
-                        <form method="post" action="" class="mt-6 space-y-6" enctype="multipart/form-data">
+                        <form method="post" action="{{ route('member.blogs.update',['blog'=>$data->id]) }}" class="mt-6 space-y-6" enctype="multipart/form-data">
                             @csrf
                             @method('put')
                           
@@ -33,19 +33,18 @@
                             </div>
                             <div>
                                 <x-input-label for="file_input" value="Thumbnail" />
-                                <input type="file" class="w-full border border-gray-300 rounded-sm" />
+                                <input type="file" class="w-full border border-gray-300 rounded-md" name='thumbnail' />
                             </div>
                             <div>
-                                <input id="x" type="hidden" value="{!! old('content', $data->content) !!}" name="content">
-                                <trix-editor input="x"
-                                 class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm min-h-80">
-                                </trix-editor>
+                                <x-textarea-trix value="{!! old('content',$data->content) !!}" id="x" name="content"></x-textarea-trix>
                             </div>
                             <div>
-                                <select name="status" class="border-gray-300 focus:border-indigo-500 focus:ring-indigo-500 rounded-md shadow-sm">
+                                <x-select name="status">
                                     <option value="draft"{{ (old('status', $data->status)=='draft')? 'selected':'' }}>Simpan Sebagai Draft</option>
                                     <option value="publish" {{ (old('status', $data->status)=='publish')? 'selected':'' }}>Publish</option>
-                                </select>
+
+                                </x-select>
+                                   
                             </div>
                             <div class="flex items-center gap-4">
                                 <a href="{{ route('member.blogs.index') }}">

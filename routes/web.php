@@ -23,6 +23,7 @@ Route::middleware('auth')->group(function () {
     Route::resource('/member/blogs',BlogController::class)->names([
         'index'=>'member.blogs.index',
         'edit'=>'member.blogs.edit',
+        'update'=>'member.blogs.update'
     ]);
 });
 

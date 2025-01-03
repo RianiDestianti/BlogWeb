@@ -60,7 +60,18 @@ class BlogController extends Controller
      */
     public function update(Request $request, Post $post)
     {
-        //
+        $request->validate([
+            'title'=>'required',
+            'content'=>'required',
+            'thumbnail'=>'image|mimes:jpeg,jpg,png|max:10240'
+        ],[
+            'title.required'=>'Judul Wajib Diisi',
+            'content.required'=>'Konten Wajib Diisi',
+            'thumbnail.image'=>'Hanya Gambar Yang Diperbolehkan',
+            'thumbnail.mimes'=>'Ekstensi Yang Diperbolehkan Hanya JPEG, JPG, Dan PNG',
+            'thumbnail.max'=>'Ukuran Maksimum Untuk Thumbnail Adalah 10MB',
+
+        ]);
     }
 
     /**
