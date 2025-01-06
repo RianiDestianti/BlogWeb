@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers\Member;
+use Illuminate\Support\Str;
 use App\Http\Controllers\Controller;
 use App\Models\Post;
 use Illuminate\Http\Request;
@@ -72,9 +73,13 @@ class BlogController extends Controller
         ]);
 
         if($request->hasFile('thumbnail')){
+            if(isset($post->thumbnail) && file_exists(public_path(getenv('CUSTOM_THUMBNAIL_LOCATION'))."/".$post->thumbnail)){
+                unlink(public_path(getenv('CUSTOM_THUMBNAIL_LOCATION'))."/".$post->thumbnail);
+            }
+            
             $image = $request->file('thumbnail');
             $image_name = time()."_".$image->getClientOriginalName();
-            $destination_path = public_path('thumbnails');
+            $destination_path = public_path(getenv('CUSTOM_THUMBNAIL_LOCATION'));
             $image->move($destination_path, $image_name);
         };
 
@@ -83,7 +88,8 @@ class BlogController extends Controller
             'description'=>$request->description,
             'content'=>$request->content,
             'status'=>$request->status,
-            'thumbnail'=>isset($image_name)?$image_name:$post->thumbnail
+            'thumbnail'=>isset($image_name)?$image_name:$post->thumbnail,
+            'slug'=>$this->generateSlug($request->title,$post->id)
         ];
         Post::where('id',$post->id)->update($data);
         return redirect()->route('member.blogs.index')->with('success','Data Berhasil Di-Update');
@@ -95,5 +101,19 @@ class BlogController extends Controller
     public function destroy(Post $post)
     {
         //
+    }
+    private function generateSlug($title,$id){
+        $slug = Str::slug($title);
+        $count = Post::Where('slug',$slug)->when($id, function($query,$id){
+            return $query->where('id','!=','$id');
+        })->count();
+
+        if($count > 0){
+            $slug = $slug."-".($count+1);
+
+            
+        }
+        return $slug;
+
     }
 }
