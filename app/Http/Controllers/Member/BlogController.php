@@ -63,15 +63,7 @@ class BlogController extends Controller
             'user_id' => Auth::user()->id
         ];
         Post::create($data);
-        return redirect()->route('member.blogs.index')->with('success', 'Data Berhasil Di-tambahkan');
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(Post $post)
-    {
-        //
+        return redirect()->route('member.blogs.index')->with('success', 'Data Berhasil Ditambahkan');
     }
 
     /**
@@ -120,7 +112,7 @@ class BlogController extends Controller
             'slug' => $this->generateSlug($request->title, $post->id)
         ];
         Post::where('id', $post->id)->update($data);
-        return redirect()->route('member.blogs.index')->with('success', 'Data Berhasil Di-Update');
+        return redirect()->route('member.blogs.index')->with('success', 'Data Berhasil Diupdate');
     }
 
     /**
@@ -128,7 +120,14 @@ class BlogController extends Controller
      */
     public function destroy(Post $post)
     {
-        //
+        Post::where('id', $post->id);
+        if (isset($post->thumbnail) && file_exists(public_path(getenv('CUSTOM_THUMBNAIL_LOCATION')) . "/" . $post->thumbnail)) {
+            unlink(public_path(getenv('CUSTOM_THUMBNAIL_LOCATION')) . "/" . $post->thumbnail);
+        }
+
+        $post->delete();
+
+        return redirect()->route('member.blogs.index')->with('success', 'Data Berhasil Dihapus');
     }
 
     private function generateSlug($title, $id = null)
