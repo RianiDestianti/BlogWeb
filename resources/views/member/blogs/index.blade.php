@@ -5,6 +5,13 @@
         </h2>
     </x-slot>
 
+    <x-slot name="headerRight">
+        <form action="{{ route('member.blogs.index') }}" method="get">
+            <x-text-input id='search' name='search' type='text' class="p-1 m-0 md:w-72 w-80 mt-3 md:mt-0" value="{{ request('search') }}" placeholder="Masukan Kata Kunci..."></x-text-input>
+            <x-secondary-button class="p-1" type='submit'>Cari</x-secondary-button>
+        </form>
+    </x-slot>
+
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white shadow-sm sm:rounded-lg overflow-x-auto">
