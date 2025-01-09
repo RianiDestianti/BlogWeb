@@ -6,7 +6,7 @@ use App\Models\Post;
 use App\Models\User;
 use Illuminate\Auth\Access\Response;
 
-class PostPolycy // Perbaiki nama kelas di sini
+class PostPolicy // Perbaiki nama kelas di sini
 {
     /*
      * Determine whether the user can view any models.
