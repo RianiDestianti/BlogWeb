@@ -1,7 +1,7 @@
 @props(['title', 'subtitle', 'data', 'description', 'link', 'user'])
 
 <div class="post-preview">
-    <a href="{{ $link ?? 'post.html' }}">
+    <a href="{{$link}}">
         <h2 class="post-title">{{ $title }}</h2>
         <h3 class="post-subtitle">
             @isset($description)
@@ -10,7 +10,7 @@
         </h3>
     </a>
     <p class="post-meta">
-        Posted by
+        Posted byHOM
         <a href="#!">{{ $user }}</a>
         on {{ $data }}
     </p>

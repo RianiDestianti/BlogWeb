@@ -12,7 +12,7 @@ class HomepageController extends Controller
     {
         $Post = Post::where('status', 'publish')
                 ->orderBy('id', 'desc')
-                ->paginate(5);
+                ->paginate(2);
     
     return view('components.front.home-page', compact('Post'));
     }

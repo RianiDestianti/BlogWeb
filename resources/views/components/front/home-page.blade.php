@@ -9,13 +9,24 @@
                     title="{{ $item->title }}"
                     description="{{ $item->description }}"
                     data="{{ $item->created_at->isoFormat('dddd, D MMMM Y') }}"
-                    user="{{ $item->user->name }}"
+                    user='{{ $item->user->name }}' 
+                    link="{{ route('blog-detail', ['slug' => $item->slug]) }}"
                 />
                 @endforeach
                 <!-- Pager-->
-                <div class="d-flex justify-content-end mb-4">
-                    <a class="btn btn-primary text-uppercase" href="#!">Older Posts →</a>
+                <div class="d-flex justify-content-between mb-4">
+                    <div>
+                        @if(!$Post->onFirstPage())
+                        <a class="btn btn-primary text-uppercase" href="{{ $Post->previousPageUrl() }}">&larr; Newer Posts</a>
+                        @endif
+                    </div>
+                    <div>
+                        @if($Post->hasMorePages())
+                        <a class="btn btn-primary text-uppercase" href="{{ $Post->nextPageUrl() }}">Older Posts &rarr;</a>
+                        @endif
+                    </div>
                 </div>
+
             </div>
         </div>
     </div>
