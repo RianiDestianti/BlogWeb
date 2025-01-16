@@ -48,14 +48,16 @@
 </head>
 <body class="font-sans text-gray-900 antialiased">
     <div class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0">
-       
-
         <div class="w-full sm:max-w-md mt-6 px-6 py-4 form-container">
             <div class="form-title">
-                {{ __('Login') }} <!-- Judul Form -->
+                @if(Route::currentRouteName() == 'login')
+                    {{ __('Login') }} <!-- Judul Form Login -->
+                @elseif(Route::currentRouteName() == 'register')
+                    {{ __('Register') }} <!-- Judul Form Register -->
+                @endif
             </div>
 
-            {{ $slot }} <!-- Tempat untuk konten form login -->
+            {{ $slot }} <!-- Tempat untuk konten form login atau register -->
         </div>
     </div>
 </body>
