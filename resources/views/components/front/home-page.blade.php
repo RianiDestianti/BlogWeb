@@ -1,4 +1,16 @@
 <x-front.layout>
+    <x-slot name="pageHeader">
+        {{ $lastData->title }}
+    </x-slot>
+    <x-slot name="pageSubheading">
+        {{ $lastData->description }}
+    </x-slot>
+    <x-slot name="pageBackground">
+        {{ asset(getenv('CUSTOM_THUMBNAIL_LOCATION')."/".$lastData->thumbnail) }}
+    </x-slot>
+    <x-slot name="pageHeaderLink">
+        {{ route ('blog-detail',['slug'=>$lastData->slug]) }}
+    </x-slot>
     <!-- Main Content-->
     <div class="container px-4 px-lg-5">
         <div class="row gx-4 gx-lg-5 justify-content-center">
@@ -31,3 +43,6 @@
         </div>
     </div>
 </x-front.layout>
+
+
+

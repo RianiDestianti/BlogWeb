@@ -10,9 +10,10 @@
         </h3>
     </a>
     <p class="post-meta">
-        Posted byHOM
+        Posted by
         <a href="#!">{{ $user }}</a>
         on {{ $data }}
     </p>
 </div>
 <hr class="my-4"/>
+ 
