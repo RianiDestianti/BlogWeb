@@ -8,10 +8,27 @@ use Illuminate\Http\Request;
 
 class BlogDetailController extends Controller
 {
-    function detail($slug) // Change parameter to $slug
+    function detail($slug)
     {
         $data = Post::where('status', 'publish')->where('slug', $slug)->firstOrFail();
-        
-        return view('components.front.blog-detail', compact('data')); // Remove the extra compact
+
+        // Get the previous and next posts
+        $prevPost = Post::where('status', 'publish')
+            ->where('id', '<', $data->id)
+            ->orderBy('id', 'desc')
+            ->first();
+
+        $nextPost = Post::where('status', 'publish')
+            ->where('id', '>', $data->id)
+            ->orderBy('id', 'asc')
+            ->first();
+
+        // Prepare pagination data
+        $pagination = [
+            'prev' => $prevPost,
+            'next' => $nextPost,
+        ];
+
+        return view('components.front.blog-detail', compact('data', 'pagination'));
     }
 }
