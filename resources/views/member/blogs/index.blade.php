@@ -50,6 +50,10 @@
                                     </td>
                                     <td class="border px-6 py-4 text-center">
                                         <a href="{{ route('member.blogs.edit', ['post' => $item->id]) }}" class="text-blue-600 hover:text-blue-400 px-2">edit</a>
+
+                                        <a target ='blank' href="{{ route('blog-detail',['slug'=>$item->slug]) }}" class="text-blue-600 hover:text-blue-400 px-2">lihat</a>
+
+
                                         <form class="inline" onsubmit="return confirm('Yakin Menghapus Data Ini?')" method="POST" action="{{ route('member.blogs.destroy', ['post' => $item->id]) }}">
                                             @csrf
                                             @method('delete')
