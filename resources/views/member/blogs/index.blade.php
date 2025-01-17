@@ -32,7 +32,10 @@
                                 <td class="border px-6 py-4">Judul</td>
                                 <td class="border px-6 py-4 hidden lg:table-cell">Tanggal</td>
                                 <td class="border px-6 py-4 hidden lg:table-cell">Status</td>
+                                @if (auth()->user()->role == 1)
                                 <td class="border px-6 py-4">Aksi</td>
+                                @endif
+                               
                             </tr>
                         </thead>
                         <tbody>
@@ -51,6 +54,7 @@
                                     <td class="border px-6 py-4 text-sm hidden lg:table-cell">
                                         {{ $item->status }}
                                     </td>
+                                    @if (auth()->user()->role == 1)
                                     <td class="border px-6 py-4 text-center">
                                         <a href="{{ route('member.blogs.edit', ['post' => $item->id]) }}" class="text-blue-600 hover:text-blue-400 px-2">edit</a>
 
@@ -62,6 +66,8 @@
                                             <button type="submit" class="text-red-600 hover:text-red-400 px-2">hapus</button>
                                         </form>
                                     </td>
+                                    @endif
+                                   
                                 </tr>
                             @endforeach
                         </tbody>
