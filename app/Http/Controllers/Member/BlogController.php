@@ -1,12 +1,12 @@
 <?php
-
 namespace App\Http\Controllers\Member;
-use Illuminate\Support\Str;
-use App\Http\Controllers\Controller;
 use App\Models\Post;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Storage;
 
 class BlogController extends Controller
 {
@@ -58,10 +58,14 @@ class BlogController extends Controller
 
         if ($request->hasFile('thumbnail')) {
             $image = $request->file('thumbnail');
-            $image_name = time() . "_" . $image->getClientOriginalName();
-            $destination_path = public_path(getenv('CUSTOM_THUMBNAIL_LOCATION'));
-            $image->move($destination_path, $image_name);
-        };
+            $image_name = uniqid() . '.' . $image->getClientOriginalExtension();
+            
+            // Store the file using Storage facade
+            Storage::disk('public')->put(
+                env('CUSTOM_THUMBNAIL_LOCATION') . '/' . $image_name, 
+                file_get_contents($image)
+            );
+        }
 
         $data = [
             'title' => $request->title,
@@ -104,16 +108,20 @@ class BlogController extends Controller
         ]);
 
         if ($request->hasFile('thumbnail')) {
-            if (isset($post->thumbnail) && file_exists(public_path(getenv('CUSTOM_THUMBNAIL_LOCATION')) . "/" . $post->thumbnail)) {
-                unlink(public_path(getenv('CUSTOM_THUMBNAIL_LOCATION')) . "/" . $post->thumbnail);
+            // Delete old thumbnail if it exists
+            if (isset($post->thumbnail)) {
+                Storage::disk('public')->delete(env('CUSTOM_THUMBNAIL_LOCATION') . '/' . $post->thumbnail);
             }
-
+            
+            // Store new thumbnail
             $image = $request->file('thumbnail');
-            $image_name = time() . "_" . $image->getClientOriginalName();
-            $destination_path = public_path(getenv('CUSTOM_THUMBNAIL_LOCATION'));
-            $image->move($destination_path, $image_name);
-        };
-
+            $image_name = uniqid() . '.' . $image->getClientOriginalExtension();
+            
+            Storage::disk('public')->put(
+                env('CUSTOM_THUMBNAIL_LOCATION') . '/' . $image_name, 
+                file_get_contents($image)
+            );
+        }
         $data = [
             'title' => $request->title,
             'description' => $request->description,

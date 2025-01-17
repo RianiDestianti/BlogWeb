@@ -35,7 +35,6 @@
                                 @if (auth()->user()->role == 1)
                                 <td class="border px-6 py-4">Aksi</td>
                                 @endif
-                               
                             </tr>
                         </thead>
                         <tbody>
