@@ -5,7 +5,6 @@ use App\Http\Controllers\Controller;
 use App\Models\Post;  // Import model Post
 use Illuminate\Http\Request;
 
-
 class HomepageController extends Controller
 {
     public function index()

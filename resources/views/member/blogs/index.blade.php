@@ -1,12 +1,13 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-2xl text-gray-800 leading-tight">
+        <h2>
             Pengaturan Blog
-            <a href="{{ route('member.blogs.create') }}" class="bg-blue-500 hover:bg-blue-600 p-3 rounded-md text-white text-sm ml-4">
-                Tambah Tulisan
+            <a href="{{ route('member.blogs.create') }}" class="text-red-500 hover:text-red-700">
+                | Tambah Tulisan
             </a>
         </h2>
     </x-slot>
+    
 
     <x-slot name="headerRight">
         <form action="{{ route('member.blogs.index') }}" method="get" class="flex items-center mt-3 md:mt-0">
@@ -32,9 +33,7 @@
                                 <td class="border px-6 py-4">Judul</td>
                                 <td class="border px-6 py-4 hidden lg:table-cell">Tanggal</td>
                                 <td class="border px-6 py-4 hidden lg:table-cell">Status</td>
-                                @if (auth()->user()->role == 1)
                                 <td class="border px-6 py-4">Aksi</td>
-                                @endif
                             </tr>
                         </thead>
                         <tbody>
@@ -66,7 +65,11 @@
                                         </form>
                                     </td>
                                     @endif
-                                   
+                                    @if (auth()->user()->role == 2)
+                                    <td class="border px-6 py-4 text-center">
+                                        <a target='_blank' href="{{ route('blog-detail', ['slug' => $item->slug]) }}" class="text-blue-600 hover:text-blue-400 px-2">lihat</a>
+                                    </td>
+                                   @endif
                                 </tr>
                             @endforeach
                         </tbody>
